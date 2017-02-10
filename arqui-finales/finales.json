@@ -1,0 +1,737 @@
+{
+    "finales": [
+        {
+            "nombre": "Final 01/12/2016",
+            "preguntas": [
+                {
+                    "esSeparador": true,
+                    "texto": "Teórico"
+                },
+                {
+                    "pregunta": "¿Desde qué lugar se extraen los valores que permiten la restauración de los registros de CPU para una tarea entrante?",
+                    "respuesta": "Estructura de Datos de Pila<br>Pila<br>Stack"
+                },
+                {
+                    "pregunta": "Nombre dos registros de CPU que se utilicen en el campo desplazamiento de una dirección virtual.",
+                    "respuesta": "Las instrucciones <code>EIP</code> y <code>ESP</code>",
+                    "explicacion": "Recordemos que son los <strong>punteros</strong> (esa palabra debería darnos una pista de que sirven para hacer desplazamientos) de instrución, y el puntero de stack."
+                },
+                {
+                    "pregunta": "¿Cuál es la finalidad de los registros 'SI' y 'DI' en modo real?",
+                    "respuesta": "Se utilizan en direccionamiento indexado.<br>Sirven para trabajar con cadenas de caracteres."
+                },
+                {
+                    "pregunta": "¿A qué hace referencia el concepto MODO directo por registro o de registro?",
+                    "respuesta": "Es el modo de direccionamiento en el cual el operando (<em>el valor que se pasa a una instrucción</em>) se aloja en un registro de la CPU.",
+                    "explicacion": "Cuando usamos por ejemplo <code>MOV AX, BX</code>, estamos utilizando datos de <code>BX</code> que se encuentran en un registro, se diferencia del direccionamiento directo 'común' en el hecho de que en nuestro caso usamos registros, los cuales son muchísimo más rápido de acceder que a los que se encuentran en memoria principal."
+                },
+                {
+                    "pregunta": "Si el campo EDATA de una instrucción de 32 bits aloja un dato (modo inmediato) ¿Cuál es su valor máximo entero? Escríbalo en hexadecimal o en potencias de 2.",
+                    "respuesta": "2^(Cantidad de bits - 1) entonces 2^(32) - 1",
+                    "explicacion": "Nos está diciendo que el campo tiene 32 bits y que tiene el valor en la instrucción misma (modo inmediato). Entonces simplemente tenemos que responder cuál es el valor máximo que se puede lograr con 32 bits o sea <code>FF FF FF FF</code>."
+                },
+                {
+                    "pregunta": "¿Qué es un hercio o Hz?",
+                    "respuesta": "Es una medida de frecuencia, representa los <strong>ciclos por segundo</strong> de un CPU."
+                },
+                {
+                    "pregunta": "Cómo se denomina la señal que indica la solicitud de atención por parte de un dispositivo externo?",
+                    "respuesta": "La señal <code>INTR</code>.",
+                    "explicacion": "No confundir con <code>INTO</code>, o <code>INT n</code> que son instrucciones de interrupción que puede activar un programador."
+                },
+                {
+                    "pregunta": "¿Cómo clasificaría una interrupción producida por una división por cero?",
+                    "respuesta": "Excepción."
+                },
+                {
+                    "pregunta": "Sabiendo que la dirección física de la última posición de una memoria es <code>FF FF FF FF</code><br>¿Cuál es el valor de <code>m</code> de esa memoria si es direccionable al octeto? (O dicho de otra manera de m X 8)",
+                    "respuesta": "m = 4G de posiciones"
+                },
+                {
+                    "pregunta": "Indique el correspondiente rango de direcciones.",
+                    "respuesta": "[0, 2^{32}-1]",
+                    "explicacion": "Desde qué número a qué número pueden ser esas posiciones."
+                },
+                {
+                    "esSeparador": true,
+                    "texto": "Práctica"
+                },
+                {
+                    "pregunta": "Para la línea de código presentada a continuación y considerando un contexto en modo real (o modo 16 bits)<br><code>3BB0:0103 MOV AX, [35B0]</code><br>Si el valor del DS es <code>AB55</code>, ¿Cuál es la dirección física del operando involucrado en ésta instrucción?",
+                    "respuesta": "AEB00",
+                    "explicacion": "Recordar que la expresión <code>[35B0]</code> significa 'el contenido de la posición...', y como acá dice que la posición de <code>DS</code> es <code>AB55</code>, hay que aplicar la formulita para obtener la dirección física (la dirección lógica sería <code>AB55:35B0</code>, y la física es la que resulta de aplicar <code>(AB55 x 10) + 35B0</code>, con lo cual al multiplicar tendríamos <code>AB550 + 35B0</code> y finalmente <code>AEB00</code>)."
+                },
+                {
+                    "pregunta": "Si el valor del <code>SS</code> es <code>3700</code> y el valor del <code>SP</code> es <code>FFFE</code>, ¿Cuál será la dirección segmentada asociada al byte vacío de la pila luego de una instrucción <code>PUSH</code>?",
+                    "respuesta": "<code>3700:FFFC</code>",
+                    "explicacion": "Previo al <code>PUSH</code> tenemos que la dirección segmentada a la que apunta la pila es <code>SS:SP</code> (Segmento de Pila : Puntero de Pila), o sea <code>3700:FFFE</code>. Hay que recordar que cuando hacemos <code>PUSH</code> el puntero <strong>decrementa</strong> (si, una locura), y cuando hacemos <code>POP</code> el puntero <strong>incrementa</strong>. Estas variaciones las hace de a 2 bytes. Así que el puntero que ahora vale <code>FFFE</code>, luego de un <code>PUSH</code> decrementaría 2 bytes hasta valer <code>FFFC</code>. Entonces, ya podemos mostrar la dirección segmentada <code>SS:SP</code> que sería <code>3700:FFFC</code>."
+                },
+                {
+                    "pregunta": "Si la instrucción siguiente a la descripta se aloja en la dirección física <code>3BC07</code>, ¿Cuál es el tamaño de la instrucción y cuántos bytes le corresponden al código de operación?",
+                    "respuesta": "4 bytes de instrucción, en los que 2bytes de código de operación y 2 bytes del campo de referencia al dato <code>35B0</code>",
+                    "explicacion": "Primero deberíamos ver cuál es la dirección física de dicha instrucción, la cual sabiendo que tenemos <code>3BB0:0103</code>, obtenemos que es <code>3BB0 x 10 + 0103 = 3BC03</code>. Como la pregunta dice que la próxima instrucción está en <code>3BC07</code>, y esta instrucción arrancaba en <code>3BC03</code>, significa que hay <code>4 bytes</code> de diferencia (o sea que esta instrucción ocupa 4 bytes en memoria). Lo siguiente no es tan obvio, pero hay que razonarlo: como estamos pasando un número a esta instrucción, el número <code>35B0</code>, que ocupa 2 bytes, nos quedan solo 2 bytes que tienen que ser lo que ocupa el código de instrucción."
+                },
+                {
+                    "pregunta": "Un proceso que se ejecuta en un sistema con memoria virtual puramente segmentada tiene un primer segmento de código de 4096 bytes. ¿Cuál es el valor del campo límite del correspondiente descriptor de segmento?",
+                    "respuesta": "01000(16) = 0000 0001 0000 0000 0000(2)",
+                    "explicacion": "Recordemos que el campo límite son 20 bits que definen qué tan largo es un segmento. Si este segmento tiene 4096 bytes, entonces el campo límite de este segmento debería tener el valor 4096 en binario."
+                },
+                {
+                    "pregunta": "¿Qué valor tiene el bit <code>P</code> de presencia cuando la CPU está ejecutando la tercera instrucción?",
+                    "respuesta": "P=1",
+                    "explicacion": "El bit de presencia es un flag que está en 1 cuando un segmento está cargado en memoria. El hecho de que se esté <em>ejecutando una instrucción</em> de dicho segmento, implica que tiene que estar cargado en memoria. El hecho de haber puesto 'tercera instrucción', es simplemente para despistar."
+                },
+                {
+                    "pregunta": "Si el valor del campo base correspondiente al mismo descriptor expresado en hexadecimal es <code>00 00 10 00</code>, ¿Cuál es la dirección física que correspondería al último byte del segmento?",
+                    "respuesta": "00 00 1F FF",
+                    "explicacion": "El campo base son 32 bits que definen en qué posición empieza un segmento. Si el segmento empieza en <code>00 00 10 00</code>, y el tamaño dijimos que era <code>0 10 00</code>, entonces <code>00 00 10 00 + 0 10 00 = 00 00 20 00</code>. Este <code>00 00 20 00</code> sería donde empieza el <strong>próximo segmento</strong>, por lo cual, el <strong>último byte del segmento que estamos calculando</strong> sería el byte previo a ése, es decir: <code>00 00 1F FF</code>."
+                }
+            ]
+        },
+
+        {
+            "nombre": "Final 06/10/2016",
+            "preguntas": [
+                {
+                    "esSeparador": true,
+                    "texto": "Teórico"
+                },
+                {
+                    "pregunta": "¿Cómo se denomina la estructura de datos que se utiliza en determinadas ocasiones, para resguardar el contenido de los registros de CPU?",
+                    "respuesta": "Pila o Stack."
+                },
+                {
+                    "pregunta": "¿Cuál es el nombre genérico de la técnica para actualizar la memoria principal desde caché? ¿Cuál es la denominación particular cuando se escribe en MP al mismo tiempo que en caché?",
+                    "respuesta": "El nombre de técnica para actualizar la memoria principal desde caché se denomina <strong>Política de Escritura</strong> (puede ser una de varias).<br>La técnica en particular para escribir en MP (memoria principal) al mismo tiempo que en caché es <strong>Escritura Inmediata</strong>"
+                },
+                {
+                    "pregunta": "¿Cuál es la finalidad de los 'registros de segmento' en modo real y en modo protegido?",
+                    "respuesta": "En modo real contiene la base de alguna estructura de datos (como por ejemplo CS, SS, ó DS, entre otros). En modo protegido contiene el selector de dichos segmentos."
+                },
+                {
+                    "pregunta": "¿Cómo se denomina el registro que actúa como 'contador de programa' o 'puntero de instrucción'? ¿De cuántos bits puede constar?",
+                    "respuesta": "Se llama <strong>Instruction Pointer (IP)</strong> y consta de 16 bits cuando se usa el registro <code>IP</code> o puede tener 32 bits cuando se usa el registro <code>EIP</code>."
+                },
+                {
+                    "pregunta": "¿Dónde se encuentra el operando cuando se utiliza direccionamiento inmediato?",
+                    "respuesta": "En la misma instrucción.<br>También es válido decir 'en el campo DATA'."
+                },
+                {
+                    "pregunta": "¿Qué es el Buffer de Traducción Anticipada y qué información se guarda en este dispositivo?",
+                    "respuesta": "Es una memoria de capacidad reducida que guarda la dirección lineal y la dirección física de las últimas 32 páginas de código accedidas dentro de un microprocesador."
+                },
+                {
+                    "pregunta": "¿En qué unidad se mide el ciclo completo de una instrucción?",
+                    "respuesta": "En ciclos de reloj, en hertz, en hz..."
+                },
+                {
+                    "pregunta": "¿Cómo se denomina la señal de respuesta de la CPU a la solicitud de atención por parte de un dispositivo externo? ¿Qué módulo especial gestiona las señales provenientes del entorno de dispositivos?",
+                    "respuesta": "La señal es <code>INTA</code> (Interruption Acknowledge). Las gestiona el módulo APIC."
+                },
+                {
+                    "pregunta": "¿Cómo se denomina el parámetro que indica la cantidad de bits que se transmiten por unidad de tiempo a través de un bus y en qué unidades se mide?",
+                    "respuesta": "Velocidad de transferencia. Se mide en Megabit/s o Gigabit/s"
+                },
+                {
+                    "esSeparador": true,
+                    "texto": "Práctica"
+                },
+                {
+                    "pregunta": "Sabiendo que una CPU genera una dirección de 34 bits que permiten acceder a la memoria principal.<br>¿Cuál es el tamaño potencial de la memoria principal?",
+                    "respuesta": "16GB",
+                    "explicacion": "Podemos razonarlo de esta forma: Si las viejas máquinas de 32 bits permitían direccionar 4GB, entonces con un bit más (33 bits) podrían hacer 8GB, y entonces con otro bit más (34 bits) podrían hacer 16GB."
+                },
+                {
+                    "pregunta": "¿Cuántos bits son significativos para direccionar una memoria DRAM de 8 Gigabytes?",
+                    "respuesta": "33 bits.",
+                    "explicación": "Tener en cuenta la explicación de la respuesta anterior."
+                },
+                {
+                    "pregunta": "Si el total de los 8 Giga están distribuidos en cuatro placas de 8 chips cada una ¿Cómo esta armada la matriz de mX8 en cada chip y cual es la capacidad de cada uno?",
+                    "respuesta": "La matriz sería de 256MX8 y tendría una capacidad de 256MB cada una.",
+                    "explicacion": "La capacidad es una cuenta matemática (8GB dividida en 4 placas da 2GB, y dice que cada placa tiene 8chips, entonce 2GB / 8 chips = 256MB).<br>La matriz de MX8 es la cantidad de <em>bloquecitos de 1 byte</em> que pueden haber."
+                },
+                {
+                    "pregunta": "Un proceso que se ejecuta en un sistema con memoria virtual puramente segmentada tiene un primer segmento de código de 4096 bytes. ¿Cuánto vale el campo el campo P de presencia cuando el programa está ejecutando la tercera instrucción?",
+                    "respuesta": "El flag estaría <code>P=1</code>",
+                    "explicacion": "El <strong>bit de presencia</strong> indica que un segmento está cargado en memoria. Como el enunciado dice que se está ejecutando una instrucción (no importa si es la tercera), significa que debería estar cargado en memoria."
+                },
+                {
+                    "pregunta": "¿Qué valor de la entidad “selector” de la dirección virtual permite acceder al segmento?",
+                    "respuesta": "El Indice de Tabla (o TI), bit 2 del selector que esté en 0, indicando que la Tabla de Descriptores es Local."
+                },
+                {
+                    "pregunta": "¿Qué valor tiene el bit G de Granularidad?",
+                    "respuesta": "El flag estaría en <code>G=0</code>",
+                    "explicacion": "El <strong>flag de granularidad</strong> indica si el campo 'tamaño' se refiere a bytes o a páginas. Como el enunciado mismo decía que era una memoria puramente segmentada, significa que no estamos hablando de páginas, si no de los tamaños en bytes, por lo tanto, el flag G debería estar en 0."
+                },
+                {
+                    "pregunta": "Si la base alojada en su descriptor y expresada en hexadecimal es <code>32 42 70 00</code>. ¿Cuál es la dirección física que correspondería al último byte del segmento?",
+                    "respuesta": "<code>32 42 7F FF</code>",
+                    "explicacion": "Si el tamaño del segmento es de 4096 bytes (lo decía el enunciado), significa que el campo que indica el tamaño de segmento (20 bits) debe ser <code>01000</code> (en hexadecimal). La técnica que podemos usar para saber cuál es el último byte, es sumar el tamaño de segmento, con la base (<code>32 42 70 00 + 0 10 00 = 32 42 80 00</code>), lo cual nos da <strong>el primer byte del segmento próximo</strong>. Si restamos 1 a ese resultado, nos daría el último byte del segmento que estábamos calculando: <code>32 42 7F FF</code>."
+                },
+                {
+                    "pregunta": "Para la línea de código presentada a continuación<br><code>AB55:0103 MOV AX, [AAAA]</code><br>Si la instrucción siguiente a la descripta se aloja en la dirección física <code>AB656</code>, ¿Cuál es el tamaño de la instrucción y cuántos bytes le corresponden al código de operación?",
+                    "respuesta": "3 bytes: 2 para el operando <code>AAAA</code> y el restante para el código de operación.",
+                    "explicacion": "Calculamos la dirección física primero de lo que tenemos <code>AB55 x 10 + 0103 = AB653</code>. Si la próxima instrucción va a estar en <code>AB656</code>, significa que hay 3 bytes de diferencia. Como vemos que en la instrucción se están usando 2 bytes para representar el dato <code>AAAA</code>, sólo nos queda concluir que el byte restante es el <strong>código de operación</strong>."
+                }
+            ]
+        },
+
+        {
+            "nombre": "Final 26/07/2016 (Tema 2)",
+            "preguntas": [
+                {
+                    "esSeparador": true,
+                    "texto": "Teórico"
+                },
+                {
+                    "pregunta": "Con dos o tres palabras como máximo indique qué es un elemento de un vector de interrupciones (considérelo en modo real)",
+                    "respuesta": "Puntero a Rutina (Una dirección del tipo CS:IP)",
+                    "explicacion": "En <strong>modo real</strong> las entradas del IDT (Tabla de Descriptores de Interrupción), poseen un CS y un IP que es el que va a determinar dónde está la rutina correspondiente a la interrupción que se produjo. En <strong>modo protegido</strong>, sin embargo, cada entrada es un descriptor de puerta que permite acceder al segmento donde se encuentra la rutina."
+                },
+                {
+                    "pregunta": "¿Cuál es la relación entre el valor numérico asociado a dicho elemento y la interrupción o excepción?",
+                    "respuesta": "Permite encontrar en el vector de interrupciones, la rutina especifica para esta excepción o interrupción."
+                },
+                {
+                    "pregunta": "¿En qué dirección de memoria se almacena el primer byte de la IDT en modo real y qué registro apunta a dicha tabla en modo protegido?",
+                    "respuesta": "En modo protegido es el IDTR (Registro de Tabla de Descriptores de Interrupción) el que apunta a dicha tabla. En modo real se ubica en el primer KB de la RAM, y el primer byte es 00 00 00 (Hexa).<br> <a class=\"btn btn-success\" href=\"https://www.tutorialspoint.com/microprocessor/microprocessor_8086_interrupts.htm\">Fuente</a>"
+                },
+                {
+                    "pregunta": "¿Qué instrucciones assembler conoce que permitan desplazar a derecha bits en un registro?",
+                    "respuesta": "<code>SAR</code> y <code>SHR</code>"
+                },
+                {
+                    "esSeparador": true,
+                    "texto": "Verdadero o Falso"
+                },
+                {
+                    "pregunta": "En un modo de direccionamiento directo para obtener el dato se accede a memoria una sola vez.",
+                    "respuesta": "Verdadero.",
+                    "explicacion": "Necesita ir a memoria y traer un dato para luego operarlo."
+                },
+                {
+                    "pregunta": "El rango de direcciones de 16 bits es (-32768. +32767).",
+                    "respuesta": "Falso. El rango de direcciones de 16 bits es (0; 65535).",
+                    "explicacion": "Si bien el rango de valores es 65536 valores distintos, la pregunta es por las direcciones posibles, es decir, los números de 0 a 2^(n)-1."
+                },
+                {
+                    "revision": true,
+                    "pregunta": "En una instrucción de una dirección un campo es el código de operación y el otro la referencia al dato (también puede ser el dato en modo de direccionamiento inmediato)",
+                    "respuesta": "Falso. No necesariamente es <strong>una referencia</strong> a un dato. Al hacer <code>JMP 10000h</code>, utiliza la dirección para posicionarse en una cierta posición de memoria, pero no está yendo a buscar ningún dato."
+                },
+                {
+                    "pregunta": "Una instrucción con formato <code>mnemónico reg, mem</code> es una instrucción que requiere un acceso a memoria principal.",
+                    "respuesta": "Falso.",
+                    "explicacion": "Si el dato referenciado por <code>mem</code> está en la caché, no haría falta que acceda a memoria principal."
+                },
+                {
+                    "pregunta": "La frecuencia indica la cantidad de ciclos por segundo y la unidad que la representa es el Hz.",
+                    "respuesta": "Verdadero."
+                },
+                {
+                    "esSeparador": true,
+                    "texto": "Práctica"
+                },
+                {
+                    "pregunta": "Una memoria principal de 4MBytes opera con una caché de 64K líneas de 8 bytes cada una y utiliza correspondencia directa (asociativa de 1 vía).<br> ¿Qué estructura de parámetros en la dirección física interpretada por el controlador de caché le permite el acceso a ésta y cómo se distribuyen los bits de cada campo?",
+                    "respuesta": "Usa la estructura <samp>[Bits de Etiqueta][Bits de Línea][Bits de Posición]. Son necesarios 22 bits de dirección física de los cuales usa 16 bits de línea, 3 bits de posición, y los restantes 3 bits para etiqueta.</samp>",
+                    "explicacion": "Como es una Asociativa de 1 Vía, sabemos que su estructura siempre es [Etiqueta][Línea][Posición]. Luego, como la memoria es de 4MB, ya podemos saber que la estructura va a tener 22 bits de largo (4MB = 2^(22)). Como vemos que tiene 64K de líneas, también lo pasamos como potencia de 2 y nos da 2^16 (entonces se necesitarán 16 bits de línea). Luego decía que cada línea es de 8 bytes, es decir 2^3 (se necesitarán 3 bits de posición). Los bits de etiqueta son los bits restantes."
+                },
+                {
+                    "pregunta": "Para implementar una memoria de 256K x 16 usando chips de 16K x 8, indicar: ¿Cuántos chips se requieren?",
+                    "respuesta": "32 chips",
+                    "explicacion": "Se aplica la fórmula:<br> <samp>(256*16)/(16*8)=32</samp> <br> <a class=\"btn btn-success\" href=\"http://www.utnianos.com.ar/foro/tema-arquitectura-ayuda-ej-banco-de-memoria?pid=25287#pid25287\">Fuente</a>"
+                },
+                {
+                    "pregunta": "¿Cuántos bits se utilizan para direccionar una palabra dentro del chip?",
+                    "respuesta": "14 bits",
+                    "explicacion": "Como el chip tiene 16K de celdas (o posiciones), necesitamos 14 bits para generar todas esas posiciones."
+                },
+                {
+                    "pregunta": "¿Cuántos bits se requieren para identificar el chip?",
+                    "respuesta": "5 bits",
+                    "explicacion": "Como hay 32 chips, se necesitan 2^5 combinaciones distintas, por eso se utilizan 5 bits. <br> <a class=\"btn btn-success\" href=\"http://www.utnianos.com.ar/foro/tema-arquitectura-ayuda-ej-banco-de-memoria?pid=25287#pid25287\">Fuente</a>"
+                },
+                {
+                    "revision": true,
+                    "pregunta": "¿Cómo está formada la matriz de chips en filas por columnas?",
+                    "respuesta": "16Kx2",
+                    "explicacion": "Como tenemos las matrices 256K x 16 y 16K x 8, lo expresamos así (256K/16K) x (16/8) = 16 x 2<a class=\"btn btn-success\" href=\"http://www.utnianos.com.ar/foro/tema-arquitectura-ayuda-ej-banco-de-memoria?pid=25287#pid25287\">Fuente</a>"
+                },
+                {
+                    "revision": true,
+                    "pregunta": "¿Cuál es el valor hexadecimal de la primera y la última dirección expresados en hexadecimal?",
+                    "respuesta": ""
+                }
+            ]
+        },
+
+        {
+            "nombre": "Final 26/07/2016 (Tema 1)",
+            "preguntas": [
+                {
+                    "esSeparador": true,
+                    "texto": "Indicar cuál es el concepto al que hace referencia cada uno de los párrafos incluídos a continuación"
+                },
+                {
+                    "pregunta": "Al conjunto de bits que acceden por vez a memoria se lo denomina...",
+                    "respuesta": "Palabra de Memoria."
+                },
+                {
+                    "pregunta": "La característica de los buses con que medimos la cantidad de bits que se transmiten por unidad de tiempo se denomina [...] y se puede medir en [...]",
+                    "respuesta": "Velocidad de transferencia y puede ser medido en MBits o Gbits."
+                },
+                {
+                    "pregunta": "Una aplicación que precise enviar y recibir datos de un dispositivo de E/S a memoria sin intervención del procesador utiliza un dispositivo...",
+                    "respuesta": "De E/S Programada."
+                },
+                {
+                    "pregunta": "Un arreglo unidimensional cuya función es apuntar a la primera instrucción del servicio de atención de una interrupción se denomina...",
+                    "respuesta": "<code>IDTR</code>",
+                    "explicacion": "La tabla IDT tiene su propio registro que apunta a la base de dicha tabla y es <code>IDTR</code>. Cuando hacemos <code>INT 4</code> por ejemplo, se utiliza implícitamente el registro <code>IDTR</code> con desplazamiento <samp>4</samp>, por ejemplo."
+                },
+                {
+                    "pregunta": "La segmentación-paginada obliga a que ambas unidades de la MMU estén activas para el <em>mapeo</em> de una dirección.",
+                    "respuesta": "Verdadero. Son requeridas ambas unidades.",
+                    "explicacion": "Es super rebuscada y mala leche esta pregunta, pero la MMU está formada por dos unidades la Unidad de Segmentación y la Unidad de Paginación. Cuando se mapea una dirección (por ejemplo, la CPU quiere información de la memoria principal), esta solicitud al recibirla la MMU primero se la pasa a la Unidad de Segmentación y luego a la Unidad de Paginación, recién ahí sabe cuál es la dirección física a la que debe dirigirse.<br> <a class=\"btn btn-success\" href=\"http://wiki.inf.utfsm.cl/index.php?title=Segmentaci%C3%B3n_y_ejemplos_de_utilizaci%C3%B3n#El_caso_Pentium\">Fuente</a>"
+                },
+                {
+                    "pregunta": "El rango del exponente en el formato de doble precisión del IEEE es (-1023;+1024).",
+                    "respuesta": "Falso. El rango es (-1022;+1023).",
+                    "explicacion": "<a class=\"btn btn-success\" href=\"https://en.wikipedia.org/wiki/IEEE_floating_point#Basic_and_interchange_formats\">Fuente</a>"
+                },
+                {
+                    "pregunta": "Una instrucción de 'llamada' o 'retorno' se clasifica como instrucción de salto o bifurcación.",
+                    "respuesta": "Verdadero. Son instrucciones de salto (más específicamente 'de llamado a rutina')."
+                },
+                {
+                    "pregunta": "Una instrucción con formato <code>mnemónico reg2, reg1</code> es una instrucción que no requiere acceso a memoria principal.",
+                    "respuesta": "Verdadero. Está utilizando únicamente registros."
+                },
+                {
+                    "pregunta": "Una cuádruple palabra es un tipo de dato que hace referencia a 64 bits.",
+                    "respuesta": "Verdadero. Palabra son 2 bytes (16 bits), Cuádruple Palabra son 8 bytes (64 bits)."
+                },
+                {
+                    "esSeparador": true,
+                    "texto": "Práctica"
+                },
+                {
+                    "pregunta": "La siguiente secuencia de instrucciones forman parte de un programa en memoria en código máquina, su representación en assembler es la siguiente<br> <code>3B45:0103 MOV AH, 10</code><br> <code>3B45:0106 MOV AH, 12</code><br> Indicar dirección efectiva o física de la primer instrucción.",
+                    "respuesta": "3B153",
+                    "explicacion": "Fórmula para convertir a dirección física <samp>3B45 x 10 + 0103 = 3B153</samp>."
+                },
+                {
+                    "pregunta": "Modo de direccionamiento de las instrucciones y justificación.",
+                    "respuesta": "Las dos son inmediatas ya que el operando se encuentra en la instrucción."
+                },
+                {
+                    "pregunta": "Decir cuál será el valor binario del acumulador al terminar de ejecutarse la 2da instrucción.",
+                    "respuesta": "<code>1100 0000 0000 0000</code>",
+                    "explicacion": "La respuesta es medio mágica porque la segunda instrucció sólo está modificando la parte alta del acumulador (AH es el primer byte de AX), y le está poniendo el valor <samp>1100</samp>. No sabemos cuánto valía su parte baja antes de ejecutar esa instrucción (tampoco está esa información en el enunciado), así que asumimos que la parte baja estaba en <samp>0000</samp>."
+                },
+                {
+                    "pregunta": "La siguiente es la representación de los campos de una dirección física vista desde el controlador caché <br><code>[Bits de Etiqueta][Bits de Línea][5 bits de identificador de byte]</code> <br>La dirección física tiene en total 24 bits<br>Si la memoria caché tiene 64 líneas... Indicar la cantidad de bits para identificar la línea.",
+                    "respuesta": "6 bits.",
+                    "explicacion": "Como la memoria caché tiene 64 líneas, significa que se necesitan 64 valores distintos para diferenciarlos. Por lo tanto, necesitamos tantos bits para representar esos valores: 6 bits."
+                },
+                {
+                    "pregunta": "¿Cuál es el tamaño de la memoria principal?",
+                    "respuesta": "16MB",
+                    "explicacion": "Lo determina la dirección física de 24 bits."
+                },
+                {
+                    "pregunta": "¿Qué tipo de correspondencia/mapeo se aplica?",
+                    "respuesta": "Asociativa de 1 Vía",
+                    "explicacion": "La dirección está dividida en Etiqueta - Línea - Posición. Si fuese totalmente asociativa sólo tendría Etiqueta-Posición. Si fuese asociativa de N vías tendría Etiqueta-Conjunto-Posición."
+                },
+                {
+                    "pregunta": "¿Cuál es el tamaño de la línea de caché?",
+                    "respuesta": "32 bytes",
+                    "explicacion": "Lo define el campo posición. Como tenemos 5 bits, entonces vamos a tener 2^5 bytes, es decir 32 bytes."
+                },
+                {
+                    "revision": true,
+                    "pregunta": "¿Cuál es el tamaño del bloque en memoria principal, si el bus de datos tiene 256 líneas y el bloque se transfiere en una sola ráfaga?",
+                    "respuesta": ""
+                }
+            ]
+        },
+
+        {
+            "nombre": "Final 01/03/2016",
+            "preguntas": [
+                {
+                    "esSeparador": true,
+                    "texto": "Teórico"
+                },
+                {
+                    "pregunta": "Indique en el procesador estudiado en el modo denominado 'protegido' si el procesador tiene acceso a memoria RAM de solo 4 Giga direcciones. En caso afirmativo indique la cantidad de bits de la dirección física. En caso negativo indique como esta constituida la dirección segmentada.",
+                    "respuesta": "Si, tiene acceso a RAM de 4 Gigas de direcciones. Se necesitan 32 bits para generar dichas direcciones físicas."
+                },
+                {
+                    "pregunta": "Indique si es verdad que cuando un dispositivo externo avisa de una solicitud de atención sería posible que el programa actual continúe. En el caso que si continúe con el programa en curso indique que como la CPU lo determinaría, en caso que no continúe el programa en curso diga porqué.",
+                    "respuesta": "Si, puede continuar. Si es una interrupción mascarable, puede continuar si el flag IF (Interruption Flag) se encuentra en 1."
+                },
+                {
+                    "pregunta": "Indique en que número hexadecimal queda representado el numero +127 en un formato de coma fija de 8 bits con negativos complementados a 2.",
+                    "respuesta": "7F",
+                    "explicacion": "El número 127 es en binario <samp>0111 1111</samp>, como estamos usando números enteros de 8 bits con negativos complementados a dos, significa que sólo podemos hacer uso de 7 bits para represenar número, y el más significativo va a ser el signo. En este caso el número 127 podemos representarlo en 7 bits, así que es un número representable en este formato, porque nos quedaría el bit más a la izquierda para poner su signo. Si pasamos <samp>0111 1111</samp> a hexa nos queda <samp>7F</samp>."
+                },
+                {
+                    "pregunta": "Indique como se denomina la memoria interna de un subsistema cache que puede accederse comparando un argumento con cada una de las filas de la matriz.",
+                    "respuesta": "Memoria de Etiquetas.",
+                    "explicacion": "Libro de Quiroga, Unidad 9.6, Página 217."
+                },
+                {
+                    "pregunta": "Si una RAM está constituida por 256 K marcos de página y el tamaño de la pagina es de 4K Bytes, cuál es el tamaño de la memoria RAM.",
+                    "respuesta": "1GB",
+                    "explicacion": "Es una cuenta matemática. Si tiene 256K frames de página y cada página tiene 4 KBytes... Nos da 1GByte."
+                },
+                {
+                    "pregunta": "Indique si es verdad que existen sólo dos registros del procesador que se utilizan para determinar el campo desplazamiento de una dirección virtual, cuando se accede a una estructura alojada en el segmento SS. Si es negativo justifique. Si es afirmativo indique cuales. ",
+                    "respuesta": "Verdadero. Los registros son SS y SP."
+                },
+                {
+                    "pregunta": "Indique con si o con no, si es verdad que un dato numérico de tipo palabra doble se almacena en RAM según la técnica LITTLE_ENDIAN. Si es negativo justifique. Si es positivo de un ejemplo numérico en hexadecimal con ambos valores",
+                    "respuesta": "Si, en Big Endian AA BB CC DD, en Little Endian tendríamos DD CC BB AA.",
+                    "explicacion": "El tipo 'palabra' (o WORD) son 2 bytes. 'Palabra doble' son 4 bytes. Lo que pregunta este enunciado es si es posible almacenar en formato little endian un número de 4 bytes. Recordemos que para hacer esto tenemos que tener tamaños que sean 'divisibles' en bytes. En el ejemplo que dimos, se ve bien que es posible 'dar vuelta' esa secuencia de bytes para que queden almacenados en Little Endian."
+                },
+                {
+                    "pregunta": "Si el rango de direcciones (expresado en hexadecimal) de una memoria de m*8 es 00-FF cuál es el valor de m?",
+                    "respuesta": "256",
+                    "explicacion": "Es una forma rebuscada de preguntar: ¿Cuántas posiciones puede tener esta memoria si el rango de direcciones es de <samp>00</samp> hasta <samp>FF</samp>?."
+                },
+                {
+                    "revision": true,
+                    "pregunta": "Representación en potencias de dos del valor negativo a partir del cúal una operación con enteros de 128 bits da overflow",
+                    "respuesta": "",
+                    "explicacion": "No se entiende la pregunta. Pero parece dar por entendido que no hablamos de números enteros sin signo, si no de números enteros que contienen negativos también (Pero qué formato? Signados? Complementados a 2?)"
+                },
+                {
+                    "pregunta": "Para establecer la condición de desigualdad entre dos operandos ¿Qué operación entre los dos operandos realiza la unidad de cálculo?",
+                    "respuesta": "Resta (instrucción SUB)."
+                },
+                {
+                    "pregunta": "¿Qué bandera o banderas se consultan?",
+                    "respuesta": "El flag Z (informa si el resultado de la última operación fue 0)."
+                },
+                {
+                    "esSeparador": true,
+                    "texto": "Práctica"
+                },
+                {
+                    "pregunta": "Teniendo el siguiente estado <br> <code>AX=0000  BX=0001  CX=000A  DX=0000</code><br><code>SP=FFEE  BP=0000  SI=0000  DI=0000</code><br> <code>DS=1516  ES=1516  SP=FFEF CS=1516  IP=0100</code><br> ¿Cuáles y con qué valor se modifican los registros indicados abajo si se ejecutan las siguientes instrucciones?<br> <code>ADD AX, 0200</code><br> <code>SUB AX, FFFF</code><br> <code>PUSH AX</code>",
+                    "respuesta": "AX = 0200, AX=FDFF, SP=FFED",
+                    "explicacion": "En el primer caso, simplemente añadimos 0200 al registro AX.<br> En el segundo caso restamos a AX el valor FFFF, por lo cual va a dar un desborde negativo, por eso queda FDFF (es el resultado de 0200 - FFFF).<br> En el tercer caso ponemos el valor de AX en la pila, por eso el puntero a pila decrementa 2 unidades (recordemos que en IA32 el puntero se mueve de a dos unidades)."
+                },
+                {
+                    "pregunta": "Las instrucciones <code>MOV CX,DX</code> y <code>MOV DX,CX</code> se representan en código de máquina como  <samp>89D1</samp> y <samp>89CA</samp> respectivamente.<br> Si el formato de la correspondiente cadena binaria de cada instrucción es:<br> <code>[4bits de Verbo][6 bits de Modo de Direccionamiento][3bits registro fuente][3 bits registro destino]</code> <br> Identifique el valor HEXADECIMAL correspondiente al verbo.",
+                    "respuesta": "<samp>8</samp>",
+                    "explicacion": "Si en la primer instrucción que está representada por el código máquina <samp>89CA</samp> pasamos todo a binario nos da el siguiente resultado:<br> <code>1000 1001 1101 0001</code><br> De los cuales el enunciado nos dice que los primeros 4 bits son el verbo <samp>1000</samp>. Si esto lo pasamos a hexa, nos da <samp>8</samp>."
+                },
+                {
+                    "pregunta": "Identifique el valor binario correspondiente a la identificación del registro CX y el correspondiente al registro DX",
+                    "respuesta": "Registro Fuente es <samp>010</samp> y el Registro Destino es <samp>001</samp>."
+                },
+                {
+                    "pregunta": "Indique si el modo de direccionamiento en es indexado",
+                    "respuesta": "Falso. Es directo por registro (va de registro a registro)."
+                },
+                {
+                    "pregunta": "Si se ejecutan consecutivamente cual es el valor final del registro",
+                    "respuesta": "Ambos registros terminan con el valor <samp>0000</samp>."
+                }
+            ]
+        },
+
+        {
+            "nombre": "Final 09/12/2015",
+            "preguntas": [
+                {
+                    "esSeparador": true,
+                    "texto": "Teórico"
+                },
+                {
+                    "revision": true,
+                    "pregunta": "Para la siguiente sentencia VECTOR(I)=3 indique por lo menos 2 registros de CPU que podrían estar implicados en el modo de direccionamiento de su correspondiente código máquina",
+                    "respuesta": "<code>DS</code> (Segmento de Datos) y <code>SI</code> (Segmento de Índices)",
+                    "explicacion": "El registro <code>SI</code> se utiliza para índices. Es probable que para apuntar a valores dentro de un vector sean necesarios los registros <code>DS</code> (segmento de datos) y un desplazamiento dado por <code>SI</code>."
+                },
+                {
+                    "pregunta": "Un registro de 32 bits almacena la siguiente información representada en hexadecimal <code>80 AA 23 BB</code>. Represéntela si es posible en notación Little-Endian, en caso contrario, indique su valor decimal considerando que representa información signada.",
+                    "respuesta": "En Little-Endian es <code>BB 23 AA 80</code>."
+                },
+                {
+                    "pregunta": "¿Qué significa DRAM? Indique la ventaja o desventaja respecto de la memoria SRAM en relación a su capacidad de almacenamiento.",
+                    "respuesta": "Significa <strong>Dynamic Random Access Memory</strong> y su ventaja es que pueden almacenar mucha más información que las SRAM."
+                },
+                {
+                    "pregunta": "¿Cómo se denomina a la división lógica asociada a un disco magnético que establece la mínima cantidad de bytes que se acceden para leer o escribir?",
+                    "respuesta": "Clúster"
+                },
+                {
+                    "pregunta": "Nombre dos instrucciones assembler asociadas a CONSULTA de banderas. Nombre dos instrucciones que MODIFIQUEN banderas.",
+                    "respuesta": "Consulta: <code>JZ</code> (salta a una instrucción si el flag Z es 0) y <code>JC</code> (salta a una instrucción si el flag de Carry es 1)<br>Modificación: <code>CLC</code> (clear carry, deja en 0 el flag de carry), <code>ADD</code> (al finalizar la suma actualiza varios flags como Z para saber si el resultado fue 0, o V para saber si hubo overflow)."
+                },
+                {
+                    "revision": true,
+                    "pregunta": "¿Hay alguna consideración que contemplar antes de sustituir una página almacenada en RAM cuyo contenido es CODIGO? Justifique.",
+                    "respuesta": "Que no sea el código en ejecución. Porque no habría forma de saber cuál es la próxima instrucción."
+                },
+                {
+                    "pregunta": "Durante la traducción de una dirección virtual a dirección física, la unidad de segmentación detecta que el valor del desplazamiento supera el campo límite del descriptor de segmento. ¿Qué ocurre entonces?",
+                    "respuesta": "Falla de Segmentación ó <samp>SEGMENTATION FAULT</samp>."
+                },
+                {
+                    "pregunta": "¿En cuántos frames queda dividida una memoria de 1GB si el tamaño de una página es de 4KB?",
+                    "respuesta": "En 256K de páginas.",
+                    "explicacion": "Si pagamos los GB a KB nos da 1.048.576KB, y si estos KB los dividimos por 4KB, nos da 262144 frames. O más simple: 256K de frames."
+                },
+                {
+                    "pregunta": "¿Cómo se denomina el bloque de lógica que permite encauzar la información de una única vía de entrada en 2^n líneas de salida?",
+                    "respuesta": "Demultiplexor",
+                    "explicacion": "Una forma de recordar memotécnicamente ésto es que acá hablamos de una vía sola, que se 'separa' en muchas (de-multiplexar, vendría a ser algo así como <em>separar</em> o <em>ramificar</em>)."
+                },
+                {
+                    "esSeparador": true,
+                    "texto": "Práctica"
+                },
+                {
+                    "pregunta": "Observe el contetnido de los siguientes registros de CPU y responda las consignas<br> <code>CX=000A BX=0B0A IP=0008 CS=0032 SS=0090 SP=4532</code><br> ¿Cuál es el valor del registro <code>CX</code> luego de la ejecución de una instrucción <code>SAR CL</code>?",
+                    "respuesta": "<code>00 05</code>, no afecta ninguna bandera.",
+                    "explicacion": "<code>SAR</code> es <em>Shift Arithmetic Right</em>, o <em>Desplazamiento Aritmético a Derecha</em>. Lo que hace es mover todos los bits a la derecha a excepción del bit más significativo (o sea, el que está más a la izquierda, lo deja intacto). Si hubiese un número en el bit menos significativo (el que está más a la derecha) lo pone en el flag de carry. Pero también hay que tener en cuenta que <code>SAR</code> no lo está aplicando en el registro <code>CX</code> si no en <code>CL</code> (es decir en la parte baja, o últimos 2 bytes). Por lo cual el número que vamos a operar es <code>0A = 0000 1010</code>. Si movemos todos los bits a la derecha, nos queda <code>0000 0101</code>, y como antes de la operación, el menos significativo era <code>0</code>, entonces no se modifica el flag de carry."
+                },
+                {
+                    "pregunta": "Si este es el estado de los registros de CPU en un momento dado, ¿Cuál es el valor de la dirección segmentada que apunta al byte vacío de la pila?",
+                    "respuesta": "La dirección segmentada que apunta al byte vacío de la pila es <code>0090:4532</code>.",
+                    "explicacion": "Recordemos que el Stack Pointer siempre apunta al byte vacío de la pila, y que la forma de dirección segmentada es <code>Base del Segmento : Desplazamiento</code>, que para el caso particular de la Pila (o Stack) son los registros <code>SS</code> y <code>SP</code>, así que el valor sería <code>SS:SP</code>, entonces en este caso <code>0090:4535</code>."
+                },
+                {
+                    "pregunta": "Si consideramos datos enteros signados para <code>BX</code> y <code>CX</code>, ¿Cuál es el valor final de <code>BX</code> luego de la ejecución de la instrucción <code>SUB BX, CX</code>?",
+                    "respuesta": "<code>BX=0B00</code>",
+                    "explicacion": "La instrucción <code>SUB</code> resta el primer registro con el segundo y guarda el resultado en el primer registro. Para este caso tenemos los valores de <code>BX=0B0A CX=000A</code> entonces la resta es <code>0B0A - 000A = 0B00</code>."
+                },
+                {
+                    "pregunta": "Considerando el valor actual del registro <code>CX</code> indique cuántas veces la instrucción <code>LOOP</code> decrementa el registro hasta que se sale de la estructura repetitiva.",
+                    "respuesta": "10 veces.",
+                    "explicacion": "Recordemos que <code>LOOP</code> funciona como <code>JMP</code> (salta a una instrucción), pero, primero se fija si <code>CX</code> es mayor que 0. Si es así, lo decrementa en 1, y luego salta. Si es 0, no salta. Es importante recordar que a ese registro se le llama Registro Contador, quizás eso sea una buena pista para recordarnos que tiene este vínculo con <code>LOOP</code>."
+                },
+                {
+                    "pregunta": "Represente el número +1 en enteros signados formato palabra, y en punto flotante de precisión simple. En ambos casos exprese su respuesta en hexadecimal.",
+                    "respuesta": "Entero Signado (Formato Palabra): <samp>00 01</samp><br>Punto Flotante de Precisión Simple: Es 1x10^0 entonces <code>3F 80 00 00</code>",
+                    "explicacion": "El formato palabra es con 2 bytes. Así que el número 1 positivo lo representamos <samp>00 01</samp> (es un 1, con muchos 0 adelante).<br> Para el otro formato, que es también conocido como Exceso-127, utiliza 4 bytes. Lo que tenemos que hacer es primero expresarlo como notación científica <samp>1x10^0</samp>. Con esto ya podemos ver el exponente (0), y su mantisa (en este caso también 0, porque es un número entero). Recordamos que el formato de Exceso-127 es:<br> Primer bit es de signo, los próximos 8 bits son la característica, y el resto de los bits son la mantisa.<br> Calculamos la característica con su fórmula <samp>Característica = Exponente + 127</samp>, lo cual da <samp>Característica = 127 = 0111 1111</samp>.<br> Entonces tenemos primer bit <samp>0</samp>, luego viene <samp>0111 1111</samp> y luego la mantisa que serían 23 bits en <samp>0</samp>. Con lo cual queda <code>0011 1111 1000 0000 0000 0000 0000 0000</code> o más lindo de expresar en hexa <code>3F 80 00 00</code>."
+                },
+                {
+                    "pregunta": "Para la línea de código presentada a continuación<br> <code>AB55:0103 INT 2</code> // Se genera el código máquina <code>CD02</code><br> ¿Con qué asocia el número (en este ejemplo el 2) en relación a la IDT o Tabla de Vectores de Interrupción? Infiera el código de instrucción para la interrupción <code>INT 3</code>",
+                    "respuesta": "Es el índice en el que se encuentra la entrada para tratar esta interrupción en la IDT.<br> El código para <code>INT 3</code> es <code>CD03</code>.",
+                    "explicacion": "La IDT es una tabla (o vector) cuyas entradas tienen el tratamiento para determinadas interrupciones. Si se usa el valor 2, entonces usará la entrada 2 de dicho vector para tratar la interrupción. en el código máquina generado <code>CD02</code> es de esperar que el último byte <samp>02</samp> sea el número que estamos usando en la instrucción, de lo que se deduce que <samp>CD</samp> parece ser el código de operación. Por lo cual es de imaginar que para <code>INT 3</code> el código máquina va a ser <code>CD03</code> (código de operación y el número 3)."
+                },
+                {
+                    "pregunta": "Exprese verbalmente (no numéricamente) a qué dirección se salta debido a la ejecución de esta instrucción.",
+                    "respuesta": "<em>Aclaración: No queda claro si se refiere a qué instrucción se ejecuta en ese momento, o al volver de la rutina de interrupción.</em><br> Si es al volver de la rutina de interrupción: A la instrucción siguiente. <br> Si es al ejecutarse esa instrucción: A la rutina de tratamiento de esta interrupción que esté determinada por la IDT."
+                },
+                {
+                    "pregunta": "Relacionando la cantidad de bytes del código de máquina de ésta instrucción indique la dirección segmentada de la instrucción a la que se retorna luego de la ejecución del <code>IRET</code>.",
+                    "respuesta": "<code>AB55:0105</code>",
+                    "explicacion": "La instrucción ocupa 2 bytes (es el código máquina generado), y como vemos que el Puntero de Instrucción vale <samp>0103</samp>, entonces, al sumarle 2 nos da que el Puntero de Instrucción ahora vale <samp>0105</samp>. Así que si lo expresamos como dirección segmentada nos queda <code>CS:IP</code> el cual para este caso es <code>AB55:0105</code>."
+                }
+            ]
+        },
+
+        {
+            "nombre": "Final 28/07/2015",
+            "preguntas": [
+                {
+                    "esSeparador": true,
+                    "texto": "Teórico"
+                },
+                {
+                    "pregunta": "¿Cómo se denomina la estructura de dato en cuyos elementos se puede encontrar el puntero al driver de dispositivo?",
+                    "respuesta": "Tabla de Vectores de Interrupción",
+                    "explicacion": "Para hacer uso de algún dispositivo de E/S (como usar un driver), el programa en ejecución debe hacer una interrupción de software con la instrucción <code>INT #</code> donde # es el número de interrupción que está asociada a dicho servicio de E/S. Fuente: Unidad 8.9 del Libro de Quiroga (Página 192)."
+                },
+                {
+                    "pregunta": "¿Cuál es la finalidad de los registros base en modo real y protegido?",
+                    "respuesta": "Sirve para direccionamiento dentro de un segmento.",
+                    "explicacion": "Recordemos que si bien el direccionamiento físico está dado por <samp>Dirección de Segmento + Desplazamiento</samp>, también se le pueden agregar dos elementos más <samp>Dirección de Segmento + Dirección Base + Índice + Desplazamiento</samp>. El registro <samp>BX</samp> (registro base) en este caso sirve para direccionamiento base <em>dentro de un segmento</em>.<br> Fuente: Libro de Quiroga Unidad 8.6.1.5 'Relación entre los registros y el modo de direccionamiento a datos' (Página 187)"
+                },
+                {
+                    "pregunta": "¿Cuál es el criterio que sustenta la alta probabilidad de acierto de una instrucción en caché basado en la probabilidad de que la próxima instrucción a ejecutarse es gemeralmente la siguiente?",
+                    "respuesta": "Vecindad Temporal y Espacial."
+                },
+                {
+                    "pregunta": "Indique una unidad del procesador asociada a la operatoria de un número real. Indique por lo menos una de sus posibles condiciones de error.",
+                    "respuesta": "FPU (Unidad de Punto Flotante), puede provocarse un overflow o underflow."
+                },
+                {
+                    "pregunta": "Memoria ultrarrápida que guarda las direcciones de las últimas 32 páginas de código accedidas.",
+                    "respuesta": "TLB (Buffer de Traducción Anticipada)"
+                },
+                {
+                    "pregunta": "Método de escritura desde caché que actuliza la información cuando el bus está disponible.",
+                    "respuesta": "Escritura Diferida"
+                },
+                {
+                    "pregunta": "Indique cuatro datos que deben almacenarse en un disco relacionados con la administración del sistema de archivos y que en general se encuentra en el sector de arranque.",
+                    "respuesta": "Número de bytes por sector. Cantidad de sectores por cluster. Cantidad de sectores por pista. Cantidad de cabezas lectograbadoras.",
+                    "explicacion": "Unidad 9.9 del Libro de Quiroga 'Administración de Memorias Externas' (Página 249)"
+                },
+                {
+                    "pregunta": "¿En qué TIPO/S de segmento/S tiene sentido el atributo que determina que debe ser escrito antes de ser sustituído?",
+                    "respuesta": "En los que no son Segmentos de Código.",
+                    "explicacion": "En un final de 2014 hacían la pregunta inversa: en qué tipo de segmento <strong>NO</strong> tiene sentido ese atributo, y la respuesta era 'En los Segmentos de Código'. <br> <a class=\"btn btn-success\" href=\"http://www.utnianos.com.ar/foro/tema-aporte-final-de-arquitectura-16-02-16-resuelto?pid=436486#pid436486\">Fuente</a>"
+                },
+                {
+                    "pregunta": "Término usual (en inglés) del tiempo de cambio de cabeza lectora o grabadora en un disco de HDD",
+                    "respuesta": "Switch",
+                    "explicacion": "Pregunta super rebuscada y mala leche (en las 372 páginas del Libro Quiroga, sólo es mencionada 2 veces esa palabra). <br> Fuente: Libro de Quiroga, Unidad 12.2.3.2 (Página 293)"
+                },
+                {
+                    "esSeparador": true,
+                    "texto": "Práctica"
+                },
+                {
+                    "revision": true,
+                    "pregunta": "Sabiendo que una instrucción tiene un campo de referencia a memoria de 64bits... ¿Cuántos bits deben tener los registros de cálculo si se admite el modo de direccionamiento inmediato? ¿Por qué?",
+                    "respuesta": ""
+                },
+                {
+                    "pregunta": "¿A cuántas direcciones de memoria se puede referenciar? ¿Cuál es el rango de direcciones expresado en potencias de 2?",
+                    "respuesta": "Con 64 bits podemos referenciar a 2^64 direcciones y el rango es [0; +2^(64) - 1]"
+                },
+                {
+                    "pregunta": "¿Cuántas direcciones de memoria determina? (Expresados en Giga y Tera)",
+                    "respuesta": "2^34 Gigas y 2^24 Teras.",
+                    "explicacion": "Como tenemos 2^64, y sabemos que con 30 bits tenemos 1GB, podemos dividirlo para tenerlo expresado en Gigas <samp>(2^64) / (2^30) = (2^34) Gigas</samp>. <br> Un Tera se expresa como 2^40, así que aplicando el mismo razonamieno obtenemos: <samp>(2^64) / (2^40) = (2^24) Teras</samp>."
+                },
+                {
+                    "pregunta": "Un proceso se ejecuta en un sistema con memoria virtual con segmentos. ¿Cuántas páginas utiliza si el segmento de código es de 8193 bytes, el de datos es de 1125 bytes y la estructura de pila está definida como de 64 bytes?",
+                    "respuesta": "3 para el segmento de código, 1 para el de datos y 1 para el de pila [Páginas]",
+                    "explicacion": "Recordemos que en el modelo de segmentación paginado se usa la memoria de a <em>bloquecitos</em> de memoria los cuales son segmentos (no olvidemos que los segmentos tienen <strong>tamaño variable</strong>) que están conformados a su vez por páginas (las cuales recordemos que tienen <strong>tamaño fijo</strong>). El tamaño de estas páginas es de 4Kbytes, por lo cual, cada segmento <em>sólo puede crecer de a 4Kbytes</em> cada vez que sea necesario, pero por esta limitación (que las páginas siempre tienen 4Kbytes), un segmento no puede ser inferior a 4Kbytes (es decir, cuando un segmento sólo tiene 1 página). Para este caso particular podemos ver que el primer segmento es de 8193 bytes, para meter esto en un segmento, tendríamos que ver cuántas páginas harían falta. Obviamente no entra en una página (que tiene 4096 bytes), ni tampoco en dos páginas (8192 bytes) y sólamente por ese byte que nos falta, tenemos que utilizar una página más para poder meter todos esos 8193 bytes en el segmento (por lo cual el segmento queda conformado por 3 páginas). Luego, el de 1125 bytes ocupa un segmento de una página (su tamaño es inferior a 4096bytes) y finalmente la pila de 64 bytes también entra en un segmento de una página."
+                },
+                {
+                    "pregunta": "¿Cuántos KBytes ocupa la imagen virtual?",
+                    "respuesta": "20 KB",
+                    "explicacion": "Esta pregunta viene en relación a lo anterior. Estamos utilizando 3 segmentos, el cual el primero tiene 3 páginas, el segundo 1 página y el último 1 página. Esto nos da 5 páginas en total. Como sabemos que las páginas tienen 4KBytes, entonces, estamos ocupando 20Kbytes de información (aún cuando no estén en uso todos esos bytes, ya están <em>reservados</em> (si se quiere decir) por esos segmentos paginados)."
+                },
+                {
+                    "pregunta": "¿Qué atributos del segmento indican que está paginado, que fue modificado, que es de dato y que es de pila? (No exprese las siglas si no los términos que representan)",
+                    "respuesta": "El atributo (bit ó flag) de Granularidad indica que el segmento está dividido en páginas.<br> El atributo de tipo nos dice si es de código, dato o pila. <br> Por otra parte, en la tabla de páginas, el flag de Bit Sucio (Dirty Bit) es el que informa que una página fue modificada (no hay flags ni atributos que indiquen que un segmento en particular fue modificado)."
+                },
+                {
+                    "pregunta": "Si se han cargado en el área local el segundo segmento de código, el de datos y la pila, ¿Cuánta memoria se ocupó?",
+                    "respuesta": "12288 bytes ó 12 kilobytes",
+                    "explicacion": "Está tan mal redactada la pregunta de este final que es imposible de entender a qué se refiere. Pero cuando dice 'segundo segmento de código' creo que se refiere a la 'segunda página' (porque hay un sólo segmento de código mencionado en todo el final).<br> Como recordamos, la segunda página del segmento de código tenía 4096 bytes, luego dice que también se cargan el segmento de datos (recordamos que tenía 1125bytes) y el de pila (64 bytes). En este caso, para cada segmento vamos a tener 1 página para cada uno, porque cada uno tiene 4096 bytes o menos, así que con una página para cada uno podemos contener cada segmento. Esto da como resultado 3 páginas en total, y como las páginas siempre son de 4KBytes, que la memoria total ocupada es 12Kbytes."
+                },
+                {
+                    "pregunta": "Indique las instrucciones de transferencia de control para un salto incondicional, una interrupción, un salto a procedimiento (el punto es válido si están todas las instrucciones necesarias).",
+                    "respuesta": "<code>JMP</code>, <code>INT n</code> y <code>CALL</code>"
+                },
+                {
+                    "pregunta": "Indique a qué instrucción se vuelve luego de una excepción de tipo Trampa y Falta (Con evento recuperable).",
+                    "respuesta": "Cuando es Trampa a la siguiente instrucción. Cuando es Falta a la misma instrucción."
+                }
+            ]
+        },
+
+        {
+            "nombre": "Final 14/07/2015",
+            "preguntas": [
+                {
+                    "esSeparador": true,
+                    "texto": "Teórico"
+                },
+                {
+                    "pregunta": "Indique el modo de direccionamiento necesario para inicializar una variable.",
+                    "respuesta": "Direccionamiento Inmediato",
+                    "explicacion": "Si pensamos fuera de los términos de assembler, recordaremos que para inicializar una variable necesitamos <strong>un valor</strong>. En el caso de assembler, cuando hablamos de valores en la misma instrucción, siempre estamos hablando de direccionamiento inmediato (es cuando el operando está en la misma instrucción)."
+                },
+                {
+                    "pregunta": "¿Cuál es la finalidad de los 'registros índice' en modo real y en modo protegido?",
+                    "respuesta": "Usar direccionamiento indexado.<br>Trabajar con cadenas de caracteres."
+                },
+                {
+                    "revision": true,
+                    "pregunta": "¿Cuál es el criterio que sustenta la alta probabilidad de acierto en una serie de instrucciones cache basado en la probabilidad de que el código de un ejecutable seguramente utiliza estructuras repetitivas?",
+                    "respuesta": "Especulación"
+                },
+                {
+                    "pregunta": "La unidad del procesador asociada al intercambio de información con el bus (BIU), indique por lo menos una de sus funciones.",
+                    "respuesta": "Transfiere datos, recibe datos, coloca direcciones, etc",
+                    "explicacion": "En Pentium recordemos que el BUS no sólo se utiliza para transferir datos (operandos o instrucciones de la memoria) si no también para transferir direcciones. Podemos pensarlo como 'las autopistas' por donde se comunican los distintos módulos de una computadora (CPU con el Controlador de Caché, con la Memoria Principal, periféricos de E/S, etc...)"
+                },
+                {
+                    "pregunta": "Memoria ultrarrápida que guarda la direcciones de las últimas 32 páginas de código accedidas",
+                    "respuesta": "TLB (Tabla de Traducción de Direcciones Lineales)."
+                },
+                {
+                    "pregunta": "Exprese en Assembler el par de instrucciones relacionadas con el salto y retorno a un servicio de atención de interrupción.",
+                    "respuesta": "<code>INT n</code> (Interruption N) y <code>IRET</code> (Interruption Return)."
+                },
+                {
+                    "pregunta": "Represente los números binarios enteros signados de 3 bits para los números -7, +4, +2, -1 considere negativos de punto fijo en C2.",
+                    "respuesta": "-7 no se puede representar.<br>+4 no se puede representar.<br>+2 es <code>010</code>.<br>-1 es <code>111</code>.",
+                    "explicacion": "Como sólo tenemos 3 bits <em>para hacer maniobras</em>, y los negativos se representan con complemento a 2 (todo esto lo dice el enunciado), podemos representar los números entre -4 y 3."
+                },
+                {
+                    "pregunta": "Luego de una operación aritmética entre enteros signados se ha puesto en 1 la bandera V indicando condición de overflow. Justifique el motivo por el cual los números son de igual signo.",
+                    "respuesta": "Cuando los operandos tienen el mismo signo y el resultado da signo contrario, es porque se realizó una suma. Si es una resta, deberían ser operandos de distinto signo."
+                },
+                {
+                    "pregunta": "¿A qué se denomina el tiempo de búsqueda o Seek time y a qué el Tiempo de latencia?",
+                    "respuesta": "Seek Time es el tiempo que tarda un cabezal en llegar a la pista requerida desde su pista actual, y el Tiempo de Latencia es el tiempo que tarda en llegar hasta el sector que necesita leer una vez que está en la pista correcta."
+                },
+                {
+                    "esSeparador": true,
+                    "texto": "Práctica"
+                },
+                {
+                    "pregunta": "Para el siguiente código Assembler teniendo en cuenta el valor inicial de los registros y si se ejecuta la instrucción <code>ADD AX, BX</code> responder las preguntas a continuación:<br><code>AX=001A BX=001C CX=001D DX=0000 SP=003C BP=0300 SI=0002 DI=0000</code><br><code>DS=0050 ES=0C98 SS=0060 CS=0400 IP=0103 NV UP EI PL NZ NA PO NC</code><br>Indicar el valor de AX luego de la ejecución de la instrucción.",
+                    "respuesta": "<code>0036</code>",
+                    "explicacion": "La instrucción <code>ADD</code> suma el valor del segundo operando hacia el primer operando."
+                },
+                {
+                    "pregunta": "Cuál es la dirección segmentada y física para acceder a la próxima instrucción si la actual ocupa 3 bytes.",
+                    "respuesta": "Segmentada:<code>0400:0106</code> <br>Física: <code>04103</code>",
+                    "explicacion": "Recordemos que la próxima instrucción a ejecutarse está dada por <code>CS:IP</code>. En este caso reemplazando por sus valores queda <code>0400:0103</code>. Esa es la dirección segmentada. Luego, para calcular la dirección física aplicamos la ya conocida fórmula <samp>Segmento * 10 + Desplazamiento</samp>, así que tendríamos en nuestro caso <code>0400 * 10 + 0103</code> lo cual da <code>04103</code>, esa es la dirección física."
+                },
+                {
+                    "pregunta": "Dada la siguiente instrucción <code>SUB AX, CX</code>, cuál será el valor del registro destino después de la ejecución del punto 1.",
+                    "respuesta": "0019",
+                    "explicacion": "Recordemos que en el punto 1 el registro <code>AX</code> quedó en 0036. La instrucción <code>SUB</code> resta valor del segundo operando al primer operando (que es un registro). Así que tendríamos que <code>0036</code> menos el valor de <code>CX</code> que es <code>001D</code>."
+                },
+                {
+                    "pregunta": "Convierta la instrucción del punto anterior a un modo de direccionamiento 'Indirecto por registro'",
+                    "respuesta": "<code>SUB AX, ((CX))</code>",
+                    "explicacion": "Cuando hablamos de 'directo' e 'indirecto' hay que recordar que implican accesos a memoria principal. En este caso es indirecto porque estamos dando una posición de memoria cuyo contenido es la posición donde está el contenido que buscamos. El libro de Quiroga utiliza esa sintaxis de <code>((registro))</code>"
+                },
+                {
+                    "pregunta": "En una unidad de disco 10 cabezas lecto/grabadoras describen 18000 Círculos concéntricos en el soporte.<br> a) Cuántas superficies grabables hay; b) ¿Cómo se denominan los círculos concéntricos?",
+                    "respuesta": "Hay 10 superficies grabables. Los círculos concéntricos se llaman pistas."
+                },
+                {
+                    "pregunta": "¿Cuántos cilindros se describen?",
+                    "respuesta": "18000."
+                },
+                {
+                    "pregunta": "Para una memoria de palabra de 8 bits, indicar a cuantos bytes se pueden acceder con una dirección física de 31 bits.",
+                    "respuesta": "2GB",
+                    "explicacion": "Si tenemos 31 bits, y utilizamos 8 bits para cada byte, nos quedan 2GB (2^(31))."
+                },
+                {
+                    "pregunta": "Indique las instrucciones de transferencia de control para: Un salto incondicional, una interrupción, un salto a procedimiento (el punto es válido si están todas las instrucciones necesarias)",
+                    "respuesta": "Incondicional: <code>JMP</code><br>Interrupción: <code>INT n</code><br>Salto a Procedimiento: <code>CALL</code>"
+                },
+                {
+                    "pregunta": "Indique a que instrucción se vuelve luego de una excepción de tipo:<br>Trampa<br>Falta (con evento recuperable):",
+                    "respuesta": "Para Falta a la misma instrucción. Para Trampa, a la instrucción siguiente."
+                }
+            ]
+        }
+
+
+    ]
+}
