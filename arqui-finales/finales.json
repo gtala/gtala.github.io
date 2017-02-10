@@ -744,9 +744,89 @@
                     "explicacion": ""
                 },
                 {
+                    "pregunta": "Método adoptado para actualizar memorias caché asociativas de una vía.",
+                    "respuesta": "LRU",
+                    "explicacion": ""
+                },
+                {
+                    "pregunta": "A) Nombre del tipo de interrupción que se atiende solo si están habilitadas por un flag del registro de estado, B) Indicar el flag",
+                    "respuesta": "A) Mascarable B) IF",
+                    "explicacion": ""
+                },
+                {
+                    "pregunta": "Indique cuántos y cuáles son los campos en que se divide un descriptor de segmento.",
+                    "respuesta": "Base, límite, atributos",
+                    "explicacion": "":
+                },
+                {
+                    "pregunta": "Caso en que el operando se encuentra directamente incorporado en la instrucción.",
+                    "respuesta": "Modo Inmediato.",
+                    "explicacion": "":
+                },
+                {
+                    "pregunta": "En modo Segmento / Paginado indicar cuál es la traducción que efectúa la Unidad de Segmentación.",
+                    "respuesta": "",
+                    "explicacion": "":
+                },
+                {
+                    "pregunta": "Indicar el tipo de acceso que utiliza un decodificador para identificar la posición de memoria seleccionada.",
+                    "respuesta": "Acceso Random",
+                    "explicacion": "":
+                },
+                {
+                    "pregunta": "¿Qué significa ruptura de secuencia?,
+                    "respuesta": "Que hay un salto en la secuencia de ejecución de Instrucciones.",
+                    "explicacion": "":
+                },
+                {
+                    "pregunta": "Indicar Tabla que hace referencia a los segmentos de una tarea en curso e indicar el registro que apunta a la misma.",
+                    "respuesta": "LDT / LDTR",
+                    "explicacion": "":
+                },
+                {
                     "esSeparador": true,
                     "texto": "Práctica"
-                }
+                },
+                {
+                    "pregunta": "Dirección segmentada y física donde se encuentra la instrucción PUSH AX.",
+                    "respuesta": "Segmentad: 0CA5:020C / Física: 0CC5C",
+                    "explicacion": ""
+                },
+                {
+                    "pregunta": "Indique el tamaño de la instrucción JNC 0310 (cuantos bytes de memoria ocupa) e indique cuantos corresponden a código.",
+                    "respuesta": "Instrucción: 3byte / código: 1 byte",
+                    "explicacion": ""
+                },
+                {
+                    "pregunta": "Considerando la ejecución de las tres primeras instrucciones, A) Se produce el salto JNC 0310? B) Cuál es la instruccion siguiente a ejecutar luego de la instrucción de salto?.",
+                    "respuesta": "",
+                    "explicacion": ""
+                },{
+                    "pregunta": "Cuanto vale el campo clase de segmento (S) del desciptor correspondiente.",
+                    "respuesta": "",
+                    "explicacion": ""
+                },
+                {
+                    "pregunta": "Cuánto vale el campo límite expresado en hexadecimal.",
+                    "respuesta": "",
+                    "explicacion": ""
+                },
+                {
+                    "pregunta": "Qué atributo determina si ha sido accedido.",
+                    "respuesta": "",
+                    "explicacion": ""
+                },
+                {
+                    "pregunta": "Cómo se denomina y cuánto vale el bit que indica que el límite está expresado en bytes.",
+                    "respuesta": "",
+                    "explicacion": ""
+                },
+                
+                {
+                    "pregunta": "Con una dirección de 30 bits considerando que la memoria es direccionable al byte. ¿Cuál es el potencial espacio de direccionamiento",
+                    "respuesta": "1GB",
+                    "explicacion": ""
+                },
             ]
         }
 
