@@ -106,7 +106,7 @@
                 },
                 {
                     "pregunta": "¿Cuál es la finalidad de los 'registros de segmento' en modo real y en modo protegido?",
-                    "respuesta": "En modo real contiene la base de alguna estructura de datos (como por ejemplo CS, SS, ó DS, entre otros). En modo protegido contiene el selector de dichos segmentos.",
+                    "respuesta": "En modo real contiene la base de alguna estructura de datos (como por ejemplo CS, SS, ó DS, entre otros). En modo protegido contiene el selector de dichos segmentos."
                 },
                 {
                     "pregunta": "¿Cómo se denomina el registro que actúa como 'contador de programa' o 'puntero de instrucción'? ¿De cuántos bits puede constar?",
