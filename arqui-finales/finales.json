@@ -730,6 +730,24 @@
                     "respuesta": "Para Falta a la misma instrucción. Para Trampa, a la instrucción siguiente."
                 }
             ]
+        },
+        {
+            "nombre": "Final 07/02/2016",
+            "preguntas": [
+                {
+                    "esSeparador": true,
+                    "texto": "Teórico"
+                },
+                {
+                    "pregunta": "A)Denominación del tiempo que transcurre entre la orden de lectura a memoria y la disponibilidad de los datos. <bold>B)</bold> En una memoria DRAM indique la unidad de medida de dicho tiempo. ",
+                    "respuesta": "A)Tiempo de acceso o transferencia. B) micro segundos",
+                    "explicacion": ""
+                },
+                {
+                    "esSeparador": true,
+                    "texto": "Práctica"
+                }
+            ]
         }
 
 
