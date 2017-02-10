@@ -106,7 +106,7 @@
                 },
                 {
                     "pregunta": "¿Cuál es la finalidad de los 'registros de segmento' en modo real y en modo protegido?",
-                    "respuesta": "En modo real contiene la base de alguna estructura de datos (como por ejemplo CS, SS, ó DS, entre otros). En modo protegido contiene el selector de dichos segmentos."
+                    "respuesta": "En modo real contiene la base de alguna estructura de datos (como por ejemplo CS, SS, ó DS, entre otros). En modo protegido contiene el selector de dichos segmentos.",
                 },
                 {
                     "pregunta": "¿Cómo se denomina el registro que actúa como 'contador de programa' o 'puntero de instrucción'? ¿De cuántos bits puede constar?",
@@ -756,32 +756,32 @@
                 {
                     "pregunta": "Indique cuántos y cuáles son los campos en que se divide un descriptor de segmento.",
                     "respuesta": "Base, límite, atributos",
-                    "explicacion": "":
+                    "explicacion": ""
                 },
                 {
                     "pregunta": "Caso en que el operando se encuentra directamente incorporado en la instrucción.",
                     "respuesta": "Modo Inmediato.",
-                    "explicacion": "":
+                    "explicacion": ""
                 },
                 {
                     "pregunta": "En modo Segmento / Paginado indicar cuál es la traducción que efectúa la Unidad de Segmentación.",
                     "respuesta": "",
-                    "explicacion": "":
+                    "explicacion": ""
                 },
                 {
                     "pregunta": "Indicar el tipo de acceso que utiliza un decodificador para identificar la posición de memoria seleccionada.",
                     "respuesta": "Acceso Random",
-                    "explicacion": "":
+                    "explicacion": ""
                 },
                 {
-                    "pregunta": "¿Qué significa ruptura de secuencia?,
+                    "pregunta": "¿Qué significa ruptura de secuencia?",
                     "respuesta": "Que hay un salto en la secuencia de ejecución de Instrucciones.",
-                    "explicacion": "":
+                    "explicacion": ""
                 },
                 {
                     "pregunta": "Indicar Tabla que hace referencia a los segmentos de una tarea en curso e indicar el registro que apunta a la misma.",
                     "respuesta": "LDT / LDTR",
-                    "explicacion": "":
+                    "explicacion": ""
                 },
                 {
                     "esSeparador": true,
@@ -826,10 +826,8 @@
                     "pregunta": "Con una dirección de 30 bits considerando que la memoria es direccionable al byte. ¿Cuál es el potencial espacio de direccionamiento",
                     "respuesta": "1GB",
                     "explicacion": ""
-                },
+                }
             ]
         }
-
-
     ]
 }
