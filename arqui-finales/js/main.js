@@ -79,6 +79,10 @@ function mostrarPreguntas(indice)
     {
         if(pregunta.esSeparador)
         {
+            if(pregunta.encabezado != undefined && pregunta.encabezado != null)
+            {
+                alert(pregunta.encabezado);
+            }
             ponerSeparador('#principal', pregunta.texto, pregunta.encabezado)
         }
         else
