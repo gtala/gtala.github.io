@@ -40,7 +40,10 @@ function ponerPregunta(selector, pregunta, numero)
 
 function ponerSeparador(selector, texto, encabezado)
 {
-    $(selector).append(`
+    
+    if(encabezado != undefined && encabezado != null)
+    {
+       $(selector).append(`
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-success">
@@ -48,7 +51,20 @@ function ponerSeparador(selector, texto, encabezado)
                     <p>${encabezado}</p>
                 </div>
             </div>
+        </div>`)  
+    }
+    else
+    {
+         $(selector).append(`
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success">
+                    <p>${texto}</p>
+                </div>
+            </div>
         </div>`)
+    }
+   
 }
 
 function mostrarPreguntas(indice)

@@ -786,16 +786,7 @@
                 {
                     "esSeparador": true,
                     "texto": "Práctica",
-                    "encabezado": "Se tiene las siguientes secuencias de instrucciones en modo real:"
-                    + "0CA5:0205 MOV AX, F000"
-                    + "0CA5:0208 ADD AX, A555"
-                    + "0CA5:020C PUSH AX"
-                    + "0CA5:020F JNC 0310"
-                    + "0CA5:0212 MOV CL, 50"
-                    + "0CA5:0215 MOV BX, [0500]"
-                    + "-------------------------"
-                    + "0CA5:0310  MOV AX, 1000"
-                    + "El estado inicial de los registros es: AX= 0000 BX=FEFF CX=0040 DX=00AA IP=0200 CS=0CA5 DS=0E00 SS=0CA5"
+                    "encabezado": "Se tiene las siguientes secuencias de instrucciones en modo real:" + "0CA5:0205 MOV AX, F000" + "0CA5:0208 ADD AX, A555" + "0CA5:020C PUSH AX" + "0CA5:020F JNC 0310" + "0CA5:0212 MOV CL, 50" + "0CA5:0215 MOV BX, [0500]" + "-------------------------" + "0CA5:0310  MOV AX, 1000" + "El estado inicial de los registros es: AX= 0000 BX=FEFF CX=0040 DX=00AA IP=0200 CS=0CA5 DS=0E00 SS=0CA5"
                 },
                 {
                     "pregunta": "Dirección segmentada y física donde se encuentra la instrucción PUSH AX.",
