@@ -38,13 +38,14 @@ function ponerPregunta(selector, pregunta, numero)
         </div>`)
 }
 
-function ponerSeparador(selector, texto)
+function ponerSeparador(selector, texto, encabezado)
 {
     $(selector).append(`
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-success">
                     <p>${texto}</p>
+                    <p>${encabezado}</p>
                 </div>
             </div>
         </div>`)
@@ -61,7 +62,9 @@ function mostrarPreguntas(indice)
     for (let pregunta of finales[indice].preguntas)
     {
         if(pregunta.esSeparador)
-            ponerSeparador('#principal', pregunta.texto)
+        {
+            ponerSeparador('#principal', pregunta.texto, pregunta.encabezado)
+        }
         else
             ponerPregunta('#principal', pregunta, i)
         i++
