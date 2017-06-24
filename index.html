@@ -5,6 +5,9 @@
 <head>
 <meta charset="utf-8">
 <title>Triangulo test</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 <style>
 	.error{
 		color: red;
@@ -16,41 +19,47 @@
 </head>
 
 <body>
+</br>
 <table>
 	<tr>
-		<td>
-			Lado A:
+		<td style="width:50px" rowspan="4">
+			&nbsp;
 		</td>
 		<td>
-			<input id="txtLadoA">
+			<b>Lado A: </b>
+		</td>
+		<td>
+			<input id="txtLadoA" class="form-control" tabindex="1">
 		</td>
 	</tr>
 	<tr>
 		<td>
-			Lado B:
+			<b>Lado B: </b>&nbsp;&nbsp;&nbsp;&nbsp;
 		</td>
 		<td>
-			<input id="txtLadoB">
+			<input id="txtLadoB" class="form-control" tabindex="2">
 		</td>
 		<td style="width:100px">
 			&nbsp;
 		</td>
 		<td >
-			<button id="btnResultado">Ver Resultado</button>
+			<button id="btnResultado" class="btn btn-primary" tabindex="4">Ver Resultado</button>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			Lado C:
+			<b>Lado C: </b>
 		</td>
 		<td>
-			<input id="txtLadoC">
+			<input id="txtLadoC" class="form-control" tabindex="3">
 		</td>
 	</tr>
 	<tr>
-		<td colspan="2">
-			<label id="lblResultado">
-			</label>
+		<td colspan="2" style="text-align:center">
+			</br>
+			
+			<h4><span id="lblResultado">
+			</span></h4>
 		</td>
 	</tr>
 	
