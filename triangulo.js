@@ -1,14 +1,14 @@
 const EQUILATERO = "Equilatero";
 const ESCALENO = "Escaleno";
-const ISOCELES = "Isoceles";
+const ISOCELES = "Isósceles";
 
-const VALOR_MAXIMO = 10000;
+const VALOR_MAXIMO = 1000;
 
-const MSJ_ERROR_DATOS_NO_CARGADOS = "Todos los dados del triangulo deben ser cargados";
+const MSJ_ERROR_DATOS_NO_CARGADOS = "Todos los lados del triangulo deben ser cargados";
 const MSJ_ERROR_DATOS_NO_NUMERICOS = "Los datos ingresados no son numericos";
 const MSJ_ERROR_DATOS_NEGATIVOS = "Los datos ingresados deben ser mayor a cero";
 const MSJ_ERROR_DATOS_NO_FORMAN_TRIANGULO = "La suma de las longitudes de dos lados cualquiera debe ser  mayor a la longitud del lado restante";
-const MSJ_ERROR_MAXIMO_VALOR = "El valor maximo que puede tener una cateto es de: 10000";
+const MSJ_ERROR_MAXIMO_VALOR = "El valor maximo que puede tener un cateto es de: 1000";
 
 $(document).ready(function() {
     $("#btnResultado").click(function() {
@@ -26,7 +26,7 @@ $(document).ready(function() {
             var tipoTriangulo = evaluarTipoTriangulo(triangulo);
 
             if (tipoTriangulo == ISOCELES) {
-                mostrarMensajeInfo("El trinagulo es Isoceles");
+                mostrarMensajeInfo("El triangulo es Isósceles");
             }
 
             if (tipoTriangulo == ESCALENO) {
@@ -51,7 +51,7 @@ $(document).ready(function() {
             ladoA: 2,
             ladoB: 1,
             ladoC: 2
-        }), ISOCELES, "Triangulo es Isoceles");
+        }), ISOCELES, "Triangulo es Isósceles");
         assert.equal(evaluarTipoTriangulo({
             ladoA: 7,
             ladoB: 5,
@@ -60,6 +60,20 @@ $(document).ready(function() {
     });
 
     QUnit.test("Exepciones", function(assert) {
+
+        //Este falla a proposito
+        assert.throws(function() {
+
+                var resultado = {};
+
+                resultado = validarLadosNoVacios(null);
+
+                if (!resultado.esValido) {
+                    throw resultado.mensajeError;
+                }
+            },
+            MSJ_ERROR_DATOS_NO_CARGADOS,
+            "Tira excepción por datos no cargados");
 
         assert.throws(function() {
 
@@ -107,7 +121,7 @@ $(document).ready(function() {
             MSJ_ERROR_DATOS_NEGATIVOS,
             "Tira excepción por datos negativos"
         );
-        
+
         assert.throws(function() {
                 var resultado = validarDesigualdadTriangular({
                     ladoA: 2,
@@ -122,7 +136,7 @@ $(document).ready(function() {
             MSJ_ERROR_DATOS_NO_FORMAN_TRIANGULO,
             "Tira excepción por no ser triangulo"
         );
-        
+
         assert.throws(function() {
                 var resultado = validarValorMaximoCateto({
                     ladoA: 10000000000000,
@@ -215,8 +229,8 @@ function validarValorMaximoCateto(triangulo) {
     triangulo.ladoC = parseInt(triangulo.ladoC);
 
     return {
-        esValido: !(triangulo.ladoA > VALOR_MAXIMO || triangulo.ladoB > VALOR_MAXIMO || triangulo.ladoC > VALOR_MAXIMO)
-        ,mensajeError: MSJ_ERROR_MAXIMO_VALOR
+        esValido: !(triangulo.ladoA > VALOR_MAXIMO || triangulo.ladoB > VALOR_MAXIMO || triangulo.ladoC > VALOR_MAXIMO),
+        mensajeError: MSJ_ERROR_MAXIMO_VALOR
     };
 }
 
@@ -259,5 +273,3 @@ function esTrianguloValido(triangulo) {
 
     return esValido;
 }
-
-
